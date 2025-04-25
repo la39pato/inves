@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME } from './config/constants';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME } from './confi
         entities: [],
         synchronize: true,
       }),
-    })
+    }),
+    UsuarioModule
   ],
   controllers: [AppController],
   providers: [AppService],
