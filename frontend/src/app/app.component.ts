@@ -1,12 +1,41 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component,OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { ApiService } from './services/api.service';
+import { CommonModule } from '@angular/common';
+import { IniciosesionComponent } from './components/iniciosesion/iniciosesion.component';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports:
+  [
+    IniciosesionComponent,
+    CommonModule,  
+    RouterLink,
+    RouterOutlet
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'frontend';
+
+export class AppComponent implements OnInit {
+  eventos: any[] = [];
+  user: any = null;
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    console.log(this.loadEventos());
+  }
+
+  async loadEventos() {
+    try {
+      this.eventos = await this.apiService.getUsuariosPendientes();
+      console.log(this.eventos)
+    } catch (error) {
+      console.error('Error al cargar usuarios:', error);
+    }
+  }
 }
+
